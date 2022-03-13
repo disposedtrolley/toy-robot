@@ -26,11 +26,12 @@
   [robot new-position]
   (let [new-x (Integer/parseInt (nth new-position 0))
         new-y (Integer/parseInt (nth new-position 1))
-        new-f (nth new-position 2)]
+        new-f (nth new-position 2)
+        candidate-robot (assoc robot :x new-x
+                                     :y new-y
+                                     :f new-f)]
     (cond
-      (some #{new-f} directions) (assoc robot :x new-x
-                                              :y new-y
-                                              :f new-f)
+      (and (not (hit-obstacle? candidate-robot)) (some #{new-f} directions)) candidate-robot
       :else robot)))
 
 (defn move
