@@ -6,6 +6,12 @@
 (def directions
   ["north" "east" "south" "west"])
 
+(defn hit-obstacle?
+  [robot]
+  (let [x (:x robot)
+        y (:y robot)]
+    (or (< x 0) (> x 4) (< y 0) (> y 4))))
+
 (defn init-robot
   []
   {:x nil
@@ -32,12 +38,22 @@
 (defn move
   [robot]
   (println "move...")
-  robot)
+  (cond
+    (placed? robot) (let [f (:f robot)
+                          next-move (cond (= "north" f) [:y 1]
+                                          (= "east" f) [:x 1]
+                                          (= "south" f) [:y -1]
+                                          (= "west" f) [:x -1])
+                          axis (nth next-move 0)
+                          step (nth next-move 1)
+                          candidate-robot (assoc robot axis (+ (axis robot) step))]
+                      (if  (hit-obstacle? candidate-robot) robot candidate-robot))
+    :else robot))
 
 (defn left
-  [robot]
-  (println "left...")
-  robot)
+ [robot]
+ (println "left...")
+ robot)
 
 (defn right
   [robot]
