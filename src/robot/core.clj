@@ -73,7 +73,7 @@
 (defn report
   [robot]
   (println "report...")
-  (println (format "[Position] x: %d y: %d f: %s" (:x robot) (:y robot) (:f robot)))
+  (if (placed? robot) (println (format "[Position] x: %d y: %d f: %s" (:x robot) (:y robot) (:f robot))))
   robot)
 
 (defn -main
