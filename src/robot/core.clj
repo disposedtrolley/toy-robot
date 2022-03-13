@@ -53,12 +53,22 @@
 (defn left
  [robot]
  (println "left...")
- robot)
+ (cond
+   (placed? robot) (let [f (:f robot)]
+                     (assoc robot :f
+                       (cond (= (first directions) f) (last directions)
+                             :else (nth directions (- 1 (.indexOf directions f))))))
+   :else robot))
 
 (defn right
   [robot]
   (println "right...")
-  robot)
+  (cond
+    (placed? robot) (let [f (:f robot)]
+                      (assoc robot :f
+                        (cond (= (last directions) f) (first directions)
+                              :else (nth directions (+ 1 (.indexOf directions f))))))
+    :else robot))
 
 (defn report
   [robot]
