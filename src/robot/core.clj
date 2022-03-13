@@ -24,8 +24,6 @@
 
 (defn place
   [robot new-position]
-  (println "place...")
-  (println new-position)
   (let [new-x (Integer/parseInt (nth new-position 0))
         new-y (Integer/parseInt (nth new-position 1))
         new-f (nth new-position 2)]
@@ -37,7 +35,6 @@
 
 (defn move
   [robot]
-  (println "move...")
   (cond
     (placed? robot) (let [f (:f robot)
                           next-move (cond (= "north" f) [:y 1]
@@ -52,7 +49,6 @@
 
 (defn left
  [robot]
- (println "left...")
  (cond
    (placed? robot) (let [f (:f robot)]
                      (assoc robot :f
@@ -62,7 +58,6 @@
 
 (defn right
   [robot]
-  (println "right...")
   (cond
     (placed? robot) (let [f (:f robot)]
                       (assoc robot :f
@@ -72,7 +67,6 @@
 
 (defn report
   [robot]
-  (println "report...")
   (if (placed? robot) (println (format "[Position] x: %d y: %d f: %s" (:x robot) (:y robot) (:f robot))))
   robot)
 
@@ -82,7 +76,6 @@
     (let [next-instruction (mapv str/lower-case
                                 (str/split (read-line) #" "))
           next-args (doall (drop 1 next-instruction))]
-      (println (format "next-instruction: %s\n" next-instruction))
       (match next-instruction
              ["place" _ _ _] (recur (place robot next-args))
              ["move"] (recur (move robot))
