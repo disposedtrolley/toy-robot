@@ -3,6 +3,14 @@
             [clojure.string :as str])
   (:gen-class))
 
+(def directions
+  [:north :south :east :west])
+
+(defn init-robot
+  []
+  {:position nil
+   :direction nil})
+
 (defn place
   [robot position]
   (println "place..."))
@@ -25,15 +33,15 @@
 
 (defn -main
   [& args]
-  (while true
+  (loop [robot (init-robot)]
     (let [next-instruction (mapv str/lower-case
                                 (str/split (read-line) #" "))
           next-args (drop next-instruction)]
       (println (format "next-instruction: %s\n" next-instruction))
       (match next-instruction
-             ["place" _ _ _] (place :r next-args)
-             ["move"] (move :r)
-             ["left"] (left :r)
-             ["right"] (right :r)
-             ["report"] (report :r)
+             ["place" _ _ _] (recur (place :r next-args))
+             ["move"] (recur (move :r))
+             ["left"] (recur (left :r))
+             ["right"] (recur (right :r))
+             ["report"] (recur (report :r))
              :else (println "Invalid move!")))))
