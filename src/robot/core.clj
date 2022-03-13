@@ -4,7 +4,7 @@
   (:gen-class))
 
 (def directions
-  ["north" "south" "east" "west"])
+  ["north" "east" "south" "west"])
 
 (defn init-robot
   []
